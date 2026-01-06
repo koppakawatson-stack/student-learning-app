@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teach - SwapSkill</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px 40px;
+      border-bottom: 2px solid #4a6cf7;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      font-size: 2.2rem;
+      color: #4a6cf7;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4a6cf7;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .header-title h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .header-title p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .nav-btn {
+      background: rgba(74, 108, 247, 0.1);
+      border: 1px solid rgba(74, 108, 247, 0.3);
+      color: #4a6cf7;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .nav-btn:hover {
+      background: rgba(74, 108, 247, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.1);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      background: white;
+      padding: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .stats-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #eee;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: #4a6cf7;
+      box-shadow: 0 6px 15px rgba(74, 108, 247, 0.1);
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      color: #4a6cf7;
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Main Content */
+    .content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 30px;
+    }
+
+    @media (max-width: 1100px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid #eee;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #4a6cf7;
+      box-shadow: 0 15px 35px rgba(74, 108, 247, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(74, 108, 247, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      font-size: 1.5rem;
+      color: #4a6cf7;
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .card-subtitle {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    /* Requests List */
+    .requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .requests-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .requests-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .requests-list::-webkit-scrollbar-thumb {
+      background: #4a6cf7;
+      border-radius: 3px;
+    }
+
+    .request-item {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid #4a6cf7;
+      transition: all 0.3s ease;
+      border-top: 1px solid #eee;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .request-item:hover {
+      background: rgba(74, 108, 247, 0.03);
+      transform: translateX(5px);
+    }
+
+    .request-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .learner-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .learner-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .learner-details h4 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .learner-details p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .request-time {
+      color: #4a6cf7;
+      font-size: 0.8rem;
+      background: rgba(74, 108, 247, 0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .request-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 10px;
+    }
+
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-label {
+      color: #666;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    .detail-value {
+      color: #4a6cf7;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .request-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-accept {
+      background: linear-gradient(to right, #4CAF50, #45a049);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-reject {
+      background: rgba(74, 108, 247, 0.1);
+      color: #4a6cf7;
+      border: 1px solid rgba(74, 108, 247, 0.3);
+      flex: 1;
+    }
+
+    .btn-view {
+      background: #f1f1f1;
+      color: #666;
+      border: 1px solid #ddd;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-accept:hover {
+      background: linear-gradient(to right, #45a049, #3d8b40);
+    }
+
+    .btn-reject:hover {
+      background: rgba(74, 108, 247, 0.2);
+      border-color: #4a6cf7;
+    }
+
+    /* Sessions List */
+    .sessions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .session-item {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid #4CAF50;
+      transition: all 0.3s ease;
+      border-top: 1px solid #eee;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .session-item:hover {
+      background: rgba(76, 175, 80, 0.05);
+      transform: translateX(5px);
+    }
+
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .session-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 10px;
+    }
+
+    .session-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-start {
+      background: linear-gradient(to right, #4a6cf7, #6a8eff);
+      color: white;
+      flex: 1;
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
+    }
+
+    .btn-reschedule {
+      background: rgba(74, 108, 247, 0.1);
+      color: #4a6cf7;
+      border: 1px solid rgba(74, 108, 247, 0.3);
+    }
+
+    .btn-cancel {
+      background: rgba(244, 67, 54, 0.1);
+      color: #F44336;
+      border: 1px solid rgba(244, 67, 54, 0.3);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-pending {
+      background: rgba(255, 193, 7, 0.1);
+      color: #FFC107;
+    }
+
+    .status-confirmed {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4CAF50;
+    }
+
+    .status-completed {
+      background: rgba(33, 150, 243, 0.1);
+      color: #2196F3;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 215, 0, 0.1);
+      margin-top: 50px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: rgba(74, 108, 247, 0.2);
+    }
+
+    .empty-text {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .empty-subtext {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .request-details,
+      .session-details {
+        grid-template-columns: 1fr;
+      }
+
+      .request-actions,
+      .session-actions {
+        flex-direction: column;
+      }
+
+      .content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div class="logo-text">SwapSkill Teach</div>
+      </div>
+
+      <div class="header-title">
+        <h1>Teaching Dashboard</h1>
+        <p>Manage your teaching sessions and learner requests</p>
+      </div>
+
+      <a href="dashboard2.html" class="nav-btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <section class="stats-bar">
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-number" id="totalStudents">24</div>
+        <div class="stat-label">Active Students</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-number" id="totalSessions">18</div>
+        <div class="stat-label">Scheduled Sessions</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-number" id="pendingRequests">6</div>
+        <div class="stat-label">Pending Requests</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="stat-number">4.8</div>
+        <div class="stat-label">Teacher Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="content">
+    <div class="dashboard-grid">
+      <!-- Requests from Learners -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-inbox"></i>
+          </div>
+          <div>
+            <div class="card-title">Learner Requests</div>
+            <div class="card-subtitle">Accept or reject teaching requests</div>
+          </div>
+        </div>
+
+        <div class="requests-list" id="requestsList">
+          <!-- Requests will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Scheduled Sessions -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <div>
+            <div class="card-title">Scheduled Sessions</div>
+            <div class="card-subtitle">Upcoming teaching sessions</div>
+          </div>
+        </div>
+
+        <div class="sessions-list" id="sessionsList">
+          <!-- Sessions will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>SwapSkill Teaching Platform © 2023 | Share Your Knowledge, Grow Together</p>
+  </footer>
+
+  <script>
+    // Data for requests - dummy data remains, real data will be added
+    let learnerRequests = [
+      {
+        id: 'dummy_1',
+        name: "Neha Kapoor",
+        avatarLetter: "N",
+        subject: "Java Programming",
+        level: "Beginner",
+        timePreference: "Evening (7-9 PM)",
+        duration: "1 hour",
+        frequency: "Twice a week",
+        language: "English, Hindi",
+        message: "I want to learn Java basics for my college project. Need help with OOP concepts.",
+        timestamp: "2 hours ago"
+      },
+      {
+        id: 'dummy_2',
+        name: "Rahul Singh",
+        avatarLetter: "R",
+        subject: "Python Data Science",
+        level: "Intermediate",
+        timePreference: "Morning (9-11 AM)",
+        duration: "1.5 hours",
+        frequency: "Once a week",
+        language: "English",
+        message: "Looking to learn pandas and numpy for data analysis.",
+        timestamp: "5 hours ago"
+      }
+    ];
+
+    // Data for scheduled sessions
+    let scheduledSessions = [
+      {
+        id: 101,
+        name: "Anjali Sharma",
+        avatarLetter: "A",
+        subject: "JavaScript Advanced",
+        date: "Tomorrow",
+        time: "10:00 AM - 11:30 AM",
+        duration: "1.5 hours",
+        meetingType: "Video Call",
+        status: "confirmed",
+        meetingLink: "https://meet.swapskill.com/js-adv-101"
+      }
+    ];
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function () {
+      fetchRequests(); // Fetch real requests
+      fetchSessions(); // Fetch real accepted sessions
+      renderRequests();
+      renderSessions();
+      updateStats();
+    });
+
+    // Fetch real accepted sessions from API
+    async function fetchSessions() {
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+      if (!currentUserId) return;
+
+      try {
+        const response = await fetch(`/api/sessions/${currentUserId}`);
+        console.log(`Fetching sessions for UserID: ${currentUserId}`);
+        if (response.ok) {
+          const sessions = await response.json();
+          console.log('Sessions received:', sessions);
+          renderRealSessions(sessions);
+        } else {
+          console.error("API Error fetching sessions:", response.status);
+        }
+      } catch (e) {
+        console.error("Network error fetching sessions", e);
+      }
+    }
+
+    function renderRealSessions(dbSessions) {
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+      dbSessions.forEach(sess => {
+        const realId = `real_sess_${sess.id}`;
+        if (!scheduledSessions.some(s => s.id === realId)) {
+          // Add to local state (only as teacher in this specific page)
+          if (sess.teacher_id == currentUserId) {
+            scheduledSessions.unshift({
+              id: realId,
+              name: sess.learner_name,
+              avatarLetter: sess.learner_name.charAt(0).toUpperCase(),
+              subject: sess.subject,
+              date: "Scheduled",
+              time: "TBD",
+              duration: "1 hour",
+              meetingType: "Video Call",
+              status: "confirmed",
+              meetingLink: `videocall.html?roomId=${sess.subject.toLowerCase().replace(/ /g, '-')}-${sess.id}`,
+              isReal: true
+            });
+          }
+        }
+      });
+      renderSessions();
+      updateStats();
+    }
+
+    // Fetch real requests from API
+    async function fetchRequests() {
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+      if (!currentUserId) return;
+
+      try {
+        const response = await fetch(`/api/requests/${currentUserId}`);
+        if (response.ok) {
+          const dbRequests = await response.json();
+          dbRequests.forEach(req => {
+            const realId = `real_${req.id}`;
+            if (!learnerRequests.some(r => r.id === realId)) {
+              learnerRequests.unshift({
+                id: realId,
+                dbId: req.id,
+                name: req.learner_name,
+                avatarLetter: req.learner_name.charAt(0).toUpperCase(),
+                subject: req.subject || "General Interest",
+                level: "N/A",
+                timePreference: "Flexible",
+                duration: "1 hour",
+                frequency: "As per need",
+                language: "English",
+                message: "Learner wants to connect with you.",
+                timestamp: new Date(req.created_at).toLocaleString(),
+                isReal: true
+              });
+            }
+          });
+          renderRequests();
+          updateStats();
+        }
+      } catch (e) {
+        console.error("Error fetching requests", e);
+      }
+    }
+
+    // Render requests
+    function renderRequests() {
+      const requestsList = document.getElementById('requestsList');
+      requestsList.innerHTML = '';
+
+      if (learnerRequests.length === 0) {
+        requestsList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-inbox"></i>
+            </div>
+            <div class="empty-text">No Pending Requests</div>
+            <div class="empty-subtext">All requests have been processed</div>
+          </div>
+        `;
+        return;
+      }
+
+      learnerRequests.forEach(request => {
+        const requestItem = document.createElement('div');
+        requestItem.className = 'request-item';
+        requestItem.dataset.id = request.id;
+
+        requestItem.innerHTML = `
+          <div class="request-header">
+            <div class="learner-info">
+              <div class="learner-avatar">${request.avatarLetter}</div>
+              <div class="learner-details">
+                <h4>${request.name} ${request.isReal ? '<span style="font-size:0.7rem; background:#4CAF50; color:white; padding:2px 5px; border-radius:3px; vertical-align:middle; margin-left:5px;">REAL</span>' : ''}</h4>
+                <p>Wants to learn ${request.subject}</p>
+              </div>
+            </div>
+            <div class="request-time">${request.timestamp}</div>
+          </div>
+          
+          <div class="request-details">
+            <div class="detail-group">
+              <div class="detail-label">Level</div>
+              <div class="detail-value">${request.level}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Preferred Time</div>
+              <div class="detail-value">${request.timePreference}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Duration</div>
+              <div class="detail-value">${request.duration}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Frequency</div>
+              <div class="detail-value">${request.frequency}</div>
+            </div>
+          </div>
+          
+          <div class="request-actions">
+            <button class="btn btn-accept" onclick="acceptRequest('${request.id}')">
+              <i class="fas fa-check"></i> Accept Request
+            </button>
+            <button class="btn btn-reject" onclick="rejectRequest('${request.id}')">
+              <i class="fas fa-times"></i> Reject
+            </button>
+            <button class="btn btn-view" onclick="viewRequestDetails('${request.id}')">
+              <i class="fas fa-eye"></i> Details
+            </button>
+          </div>
+        `;
+
+        requestsList.appendChild(requestItem);
+      });
+    }
+
+    // Render sessions
+    function renderSessions() {
+      const sessionsList = document.getElementById('sessionsList');
+      sessionsList.innerHTML = '';
+
+      if (scheduledSessions.length === 0) {
+        sessionsList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <div class="empty-text">No Scheduled Sessions</div>
+            <div class="empty-subtext">Schedule your first teaching session</div>
+          </div>
+        `;
+        return;
+      }
+
+      scheduledSessions.forEach(session => {
+        const sessionItem = document.createElement('div');
+        sessionItem.className = 'session-item';
+        sessionItem.dataset.id = session.id;
+
+        // Get status badge
+        let statusBadge = '';
+        if (session.status === 'confirmed') {
+          statusBadge = `<span class="status-badge status-confirmed">Confirmed</span>`;
+        } else if (session.status === 'pending') {
+          statusBadge = `<span class="status-badge status-pending">Pending</span>`;
+        } else if (session.status === 'completed') {
+          statusBadge = `<span class="status-badge status-completed">Completed</span>`;
+        }
+
+        sessionItem.innerHTML = `
+          <div class="session-header">
+            <div class="learner-info">
+              <div class="learner-avatar">${session.avatarLetter}</div>
+              <div class="learner-details">
+                <h4>${session.name}</h4>
+                <p>${session.subject}</p>
+              </div>
+            </div>
+            ${statusBadge}
+          </div>
+          
+          <div class="session-details">
+            <div class="detail-group">
+              <div class="detail-label">Date</div>
+              <div class="detail-value">${session.date}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Time</div>
+              <div class="detail-value">${session.time}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Duration</div>
+              <div class="detail-value">${session.duration}</div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-label">Meeting Type</div>
+              <div class="detail-value">${session.meetingType}</div>
+            </div>
+          </div>
+          
+          <div class="session-actions">
+            ${session.isReal ?
+            `<a href="${session.meetingLink}" class="btn btn-start">
+                <i class="fas fa-play"></i> Start Session
+              </a>` :
+            `<button class="btn btn-start" onclick="startSession('${session.id}')">
+                <i class="fas fa-play"></i> Start Demo
+              </button>`
+          }
+            <button class="btn btn-reschedule" onclick="rescheduleSession('${session.id}')">
+              <i class="fas fa-calendar-alt"></i> Reschedule
+            </button>
+            <button class="btn btn-cancel" onclick="cancelSession('${session.id}')">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+          </div>
+        `;
+
+        sessionsList.appendChild(sessionItem);
+      });
+    }
+
+    // Update stats
+    function updateStats() {
+      document.getElementById('totalStudents').textContent = scheduledSessions.length;
+      document.getElementById('totalSessions').textContent = scheduledSessions.length;
+      document.getElementById('pendingRequests').textContent = learnerRequests.length;
+    }
+
+    // Accept request
+    async function acceptRequest(requestId) {
+      const requestIndex = learnerRequests.findIndex(r => r.id === requestId);
+      if (requestIndex === -1) return;
+
+      const request = learnerRequests[requestIndex];
+
+      if (request.isReal) {
+        try {
+          await fetch(`/api/requests/${request.dbId}/status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'accepted' })
+          });
+        } catch (e) {
+          console.error("Error accepting request", e);
+        }
+      }
+
+      // Create a new session from the request
+      const newSession = {
+        id: request.isReal ? `real_sess_${request.dbId}` : Date.now().toString(),
+        name: request.name,
+        avatarLetter: request.avatarLetter,
+        subject: request.subject,
+        date: "Tomorrow",
+        time: request.timePreference,
+        duration: request.duration,
+        meetingType: "Video Call",
+        status: "confirmed",
+        meetingLink: request.isReal ?
+          `videocall.html?roomId=${request.subject.toLowerCase().replace(/ /g, '-')}-${request.dbId}` :
+          `https://meet.jit.si/SwapSkill-Demo-${Date.now()}`,
+        isReal: request.isReal
+      };
+
+      scheduledSessions.unshift(newSession);
+
+      // Remove from requests
+      learnerRequests.splice(requestIndex, 1);
+
+      // Update UI
+      renderRequests();
+      renderSessions();
+      updateStats();
+
+      alert(`Request from ${request.name} accepted! Session has been scheduled.`);
+    }
+
+    // Reject request
+    async function rejectRequest(requestId) {
+      const requestIndex = learnerRequests.findIndex(r => r.id === requestId);
+      if (requestIndex === -1) return;
+
+      const request = learnerRequests[requestIndex];
+
+      if (confirm(`Are you sure you want to reject ${request.name}'s request?`)) {
+        if (request.isReal) {
+          try {
+            await fetch(`/api/requests/${request.dbId}/status`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status: 'rejected' })
+            });
+          } catch (e) {
+            console.error("Error rejecting request", e);
+          }
+        }
+
+        learnerRequests.splice(requestIndex, 1);
+        renderRequests();
+        updateStats();
+        alert(`Request from ${request.name} has been rejected.`);
+      }
+    }
+
+    // View request details
+    function viewRequestDetails(requestId) {
+      const request = learnerRequests.find(r => r.id === requestId);
+      if (!request) return;
+
+      alert(`Request Details:\n\n` +
+        `Learner: ${request.name}\n` +
+        `Subject: ${request.subject}\n` +
+        `Level: ${request.level}\n` +
+        `Preferred Time: ${request.timePreference}\n` +
+        `Duration: ${request.duration}\n` +
+        `Frequency: ${request.frequency}\n` +
+        `Language: ${request.language}\n\n` +
+        `Message: ${request.message}\n\n` +
+        `Received: ${request.timestamp}`);
+    }
+
+    // Start session
+    function startSession(sessionId) {
+      console.log("Attempting to start session with ID:", sessionId);
+      console.log("Available sessions:", scheduledSessions.map(s => s.id));
+
+      // Use loose equality == or convert to string to match "101" with 101
+      const session = scheduledSessions.find(s => String(s.id) === String(sessionId));
+
+      if (!session) {
+        console.error("Session not found for ID:", sessionId);
+        alert("Session matching failed. Please refresh the page.");
+        return;
+      }
+
+      console.log("Found session:", session);
+
+      if (session.isReal) {
+        // Redirect to the classroom room
+        console.log("Redirecting to real classroom:", session.meetingLink);
+        window.location.href = session.meetingLink;
+      } else {
+        // Fallback for dummy sessions
+        console.log("Opening demo session in new tab:", session.meetingLink);
+        alert(`Starting Demo Session: ${session.name} for ${session.subject}`);
+        window.open(session.meetingLink, '_blank');
+      }
+    }
+
+    // Reschedule session
+    function rescheduleSession(sessionId) {
+      const session = scheduledSessions.find(s => s.id === sessionId);
+      if (!session) return;
+
+      const newDate = prompt(`Reschedule session with ${session.name} for ${session.subject}.\n` +
+        `Current schedule: ${session.date} at ${session.time}\n\n` +
+        `Enter new date/time (e.g., "Next Monday, 3 PM"):`);
+
+      if (newDate && newDate.trim()) {
+        session.date = newDate.split(',')[0];
+        session.time = newDate.split(',')[1] ? newDate.split(',')[1].trim() : session.time;
+        renderSessions();
+        alert(`Session rescheduled to ${session.date} at ${session.time}`);
+      }
+    }
+
+    // Cancel session
+    function cancelSession(sessionId) {
+      const sessionIndex = scheduledSessions.findIndex(s => s.id === sessionId);
+      if (sessionIndex === -1) return;
+
+      const session = scheduledSessions[sessionIndex];
+
+      if (confirm(`Are you sure you want to cancel the session with ${session.name} for ${session.subject}?\n\n` +
+        `This action cannot be undone.`)) {
+        scheduledSessions.splice(sessionIndex, 1);
+        renderSessions();
+        updateStats();
+        alert(`Session with ${session.name} has been cancelled.`);
+      }
+    }
+  </script>
+</body>
+
+</html>

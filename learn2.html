@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Teachers - SwapSkill</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px 40px;
+      border-bottom: 2px solid #4a6cf7;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      font-size: 2.2rem;
+      color: #4a6cf7;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4a6cf7;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .header-title h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .header-title p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .nav-btn {
+      background: rgba(74, 108, 247, 0.1);
+      border: 1px solid rgba(74, 108, 247, 0.3);
+      color: #4a6cf7;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .nav-btn:hover {
+      background: rgba(74, 108, 247, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.1);
+    }
+
+    /* Search & Filter Section */
+    .search-section {
+      background: white;
+      padding: 30px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .search-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 25px;
+      border: 1px solid #ddd;
+      transition: all 0.3s;
+    }
+
+    .search-box:focus-within {
+      border-color: #4a6cf7;
+      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+      background: white;
+    }
+
+    .search-icon {
+      color: #4a6cf7;
+      font-size: 1.2rem;
+      margin-right: 15px;
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #333;
+      font-size: 1.1rem;
+      padding: 10px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .filter-label {
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .filter-select {
+      padding: 12px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      color: #333;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .filter-select:focus {
+      border-color: #4a6cf7;
+      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+    }
+
+    /* Teachers Grid */
+    .teachers-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .teachers-count {
+      background: rgba(74, 108, 247, 0.1);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #4a6cf7;
+      font-weight: 600;
+    }
+
+    .teachers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    /* Teacher Card */
+    .teacher-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid #eee;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teacher-card:hover {
+      transform: translateY(-10px);
+      border-color: #4a6cf7;
+      box-shadow: 0 20px 40px rgba(74, 108, 247, 0.1);
+    }
+
+    .teacher-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .teacher-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      font-weight: bold;
+      margin-right: 20px;
+      border: 3px solid rgba(74, 108, 247, 0.2);
+    }
+
+    .teacher-info h3 {
+      font-size: 1.4rem;
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .teacher-title {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Rating */
+    .rating {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      gap: 5px;
+    }
+
+    .stars {
+      color: #FFC107;
+      font-size: 1.1rem;
+    }
+
+    .rating-value {
+      margin-left: 10px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Subjects */
+    .subjects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 15px 0;
+    }
+
+    .subject-tag {
+      background: rgba(74, 108, 247, 0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #4a6cf7;
+      border: 1px solid rgba(74, 108, 247, 0.2);
+      font-weight: 600;
+    }
+
+    /* Details */
+    .teacher-details {
+      margin: 15px 0;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .detail-icon {
+      color: #4a6cf7;
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    /* Actions */
+    .teacher-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .connect-btn {
+      flex: 1;
+      padding: 12px;
+      background: linear-gradient(to right, #4a6cf7, #6a8eff);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+
+    .connect-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 108, 247, 0.4);
+    }
+
+    .profile-btn {
+      padding: 12px 20px;
+      background: transparent;
+      border: 1px solid #4a6cf7;
+      color: #4a6cf7;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .profile-btn:hover {
+      background: rgba(74, 108, 247, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(74, 108, 247, 0.1);
+      margin-top: 50px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .teachers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .teachers-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .teacher-actions {
+        flex-direction: column;
+      }
+
+      .search-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="logo-text">SwapSkill</div>
+      </div>
+
+      <div class="header-title">
+        <h1>Find Expert Teachers</h1>
+        <p>Connect with professionals for personalized learning</p>
+      </div>
+
+      <a href="dashboard.html" class="nav-btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  </header>
+
+  <!-- Search & Filter Section -->
+  <section class="search-section">
+    <div class="search-container">
+      <div class="search-box">
+        <div class="search-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <input type="text" id="searchInput" class="search-input"
+          placeholder="Search teachers by name, subject, or expertise...">
+      </div>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label class="filter-label">Subject</label>
+          <select id="subjectFilter" class="filter-select">
+            <option value="">All Subjects</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="React">React</option>
+            <option value="Node.js">Node.js</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Machine Learning">Machine Learning</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Mobile Development">Mobile Development</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Rating</label>
+          <select id="ratingFilter" class="filter-select">
+            <option value="0">All Ratings</option>
+            <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
+            <option value="4">4+ Stars ⭐⭐⭐⭐</option>
+            <option value="3">3+ Stars ⭐⭐⭐</option>
+          </select>
+        </div>
+
+        <!-- Removed Price Filter -->
+        <div class="filter-group">
+          <label class="filter-label">Experience</label>
+          <select id="experienceFilter" class="filter-select">
+            <option value="0">Any Experience</option>
+            <option value="1">1+ Years</option>
+            <option value="3">3+ Years</option>
+            <option value="5">5+ Years</option>
+            <option value="10">10+ Years</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Availability</label>
+          <select id="availabilityFilter" class="filter-select">
+            <option value="">Any Time</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="weekend">Weekend</option>
+            <option value="flexible">Flexible</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teachers Grid -->
+  <section class="teachers-container">
+    <div class="section-header">
+      <div class="section-title">
+        <i class="fas fa-chalkboard-teacher"></i>
+        Available Teachers
+        <span class="teachers-count" id="teacherCount">12 Teachers</span>
+      </div>
+
+      <div class="sort-options">
+        <select id="sortFilter" class="filter-select">
+          <option value="rating">Sort by: Highest Rating</option>
+          <option value="experience">Most Experienced</option>
+          <option value="students">Most Students</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="teachers-grid" id="teachersGrid">
+      <!-- Teachers will be populated by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>SwapSkill Learning Platform © 2023 | Connect, Learn, Grow</p>
+  </footer>
+
+  <script>
+    // Teacher Data - Dummy + Real will be merged
+    let teachers = [
+      {
+        id: 1,
+        name: "Ravi Kumar",
+        title: "Senior Java Developer",
+        subjects: ["Java", "Spring Boot", "Microservices"],
+        rating: 5,
+        ratingCount: 127,
+        experience: "8 years",
+        availability: "Morning, Weekend",
+        language: "English, Hindi",
+        students: 350,
+        avatarLetter: "R"
+      },
+      {
+        id: 2,
+        name: "Anjali Sharma",
+        title: "Python & Data Science Expert",
+        subjects: ["Python", "Data Science", "Machine Learning"],
+        rating: 4.8,
+        ratingCount: 89,
+        experience: "6 years",
+        availability: "Evening",
+        language: "English, Telugu",
+        students: 280,
+        avatarLetter: "A"
+      },
+      {
+        id: 3,
+        name: "Rahul Singh",
+        title: "C++ & Algorithms Specialist",
+        subjects: ["C++", "Data Structures", "Algorithms"],
+        rating: 4.5,
+        ratingCount: 65,
+        experience: "7 years",
+        availability: "Weekend",
+        language: "Hindi, English",
+        students: 190,
+        avatarLetter: "R"
+      },
+      {
+        id: 4,
+        name: "Priya Mehta",
+        title: "Full Stack Developer",
+        subjects: ["JavaScript", "React", "Node.js"],
+        rating: 4.9,
+        ratingCount: 203,
+        experience: "5 years",
+        availability: "Afternoon, Evening",
+        language: "English",
+        students: 420,
+        avatarLetter: "P"
+      },
+      {
+        id: 5,
+        name: "Suresh Reddy",
+        title: "Backend Engineer",
+        subjects: ["PHP", "Laravel", "MySQL"],
+        rating: 4.3,
+        ratingCount: 78,
+        experience: "10 years",
+        availability: "Morning",
+        language: "Telugu, English",
+        students: 310,
+        avatarLetter: "S"
+      },
+      {
+        id: 6,
+        name: "Neha Kapoor",
+        title: "Ruby on Rails Developer",
+        subjects: ["Ruby", "Rails", "PostgreSQL"],
+        rating: 4.7,
+        ratingCount: 92,
+        experience: "4 years",
+        availability: "Evening",
+        language: "English, Hindi",
+        students: 180,
+        avatarLetter: "N"
+      },
+      {
+        id: 7,
+        name: "Vikram Patel",
+        title: "Android Developer",
+        subjects: ["Kotlin", "Android", "Mobile Development"],
+        rating: 4.6,
+        ratingCount: 115,
+        experience: "5 years",
+        availability: "Morning, Afternoon",
+        language: "English, Gujarati",
+        students: 240,
+        avatarLetter: "V"
+      },
+      {
+        id: 8,
+        name: "Meena Desai",
+        title: "UI/UX & Frontend Expert",
+        subjects: ["HTML/CSS", "React", "UI/UX Design"],
+        rating: 4.8,
+        ratingCount: 156,
+        experience: "4 years",
+        availability: "Afternoon",
+        language: "English, Marathi",
+        students: 290,
+        avatarLetter: "M"
+      },
+      {
+        id: 9,
+        name: "Arun Kumar",
+        title: "DevOps Engineer",
+        subjects: ["Docker", "Kubernetes", "AWS"],
+        rating: 4.9,
+        ratingCount: 87,
+        experience: "9 years",
+        availability: "Weekend",
+        language: "English, Tamil",
+        students: 160,
+        avatarLetter: "A"
+      },
+      {
+        id: 10,
+        name: "Sonia Verma",
+        title: "Data Analyst",
+        subjects: ["SQL", "Excel", "Tableau", "Python"],
+        rating: 4.4,
+        ratingCount: 73,
+        experience: "3 years",
+        availability: "Evening, Weekend",
+        language: "English, Hindi",
+        students: 210,
+        avatarLetter: "S"
+      },
+      {
+        id: 11,
+        name: "Kiran Reddy",
+        title: "Game Developer",
+        subjects: ["C#", "Unity", "Game Development"],
+        rating: 4.7,
+        ratingCount: 64,
+        experience: "6 years",
+        availability: "Flexible",
+        language: "English, Telugu",
+        students: 130,
+        avatarLetter: "K"
+      },
+      {
+        id: 12,
+        name: "Deepak Sharma",
+        title: "Cybersecurity Expert",
+        subjects: ["Network Security", "Ethical Hacking", "Linux"],
+        rating: 5.0,
+        ratingCount: 45,
+        experience: "12 years",
+        availability: "Weekend",
+        language: "English, Hindi",
+        students: 95,
+        avatarLetter: "D"
+      }
+    ];
+
+    // Initialize the page
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function () {
+      fetchRealTeachers();
+
+      // select filter listeners...
+      document.getElementById('searchInput').addEventListener('input', filterTeachers);
+      // ... (other listeners are safely below this block)
+    });
+
+    // Fetch Real Teachers from API
+    async function fetchRealTeachers() {
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+      try {
+        const response = await fetch(`/api/teachers?currentUserId=${currentUserId}`);
+        if (response.ok) {
+          const realTeachers = await response.json();
+
+          realTeachers.forEach(t => {
+            // Transform for compatibility and avoid ID collisions
+            t.id = `real_${t.id}`;
+            t.isReal = true;
+
+            // Ensure no duplicates if re-fetched
+            if (!teachers.some(existing => existing.id === t.id)) {
+              teachers.unshift(t); // Add real users to the TOP
+            }
+          });
+        }
+      } catch (e) {
+        console.error("Error fetching teachers", e);
+      }
+
+      // Render combined list
+      renderTeachers(teachers);
+      updateTeacherCount();
+    }
+
+    // Add event listeners for filters
+    document.getElementById('searchInput').addEventListener('input', filterTeachers);
+    document.getElementById('subjectFilter').addEventListener('change', filterTeachers);
+    document.getElementById('ratingFilter').addEventListener('change', filterTeachers);
+    document.getElementById('experienceFilter').addEventListener('change', filterTeachers);
+    document.getElementById('availabilityFilter').addEventListener('change', filterTeachers);
+    document.getElementById('sortFilter').addEventListener('change', sortTeachers);
+    // Filter listeners are already attached inside the DOMContentLoaded if we moved them,
+    // but here they are global. Let's safeguard.
+
+    // Render teachers to the grid
+    function renderTeachers(teacherList) {
+      const grid = document.getElementById('teachersGrid');
+      grid.innerHTML = '';
+
+      teacherList.forEach(teacher => {
+        const card = createTeacherCard(teacher);
+        grid.appendChild(card);
+      });
+
+      updateTeacherCount(teacherList.length);
+    }
+
+    // Create teacher card element
+    function createTeacherCard(teacher) {
+      const card = document.createElement('div');
+      card.className = 'teacher-card';
+      card.dataset.id = teacher.id;
+      card.dataset.name = teacher.name.toLowerCase();
+      card.dataset.subjects = teacher.subjects.join(',').toLowerCase();
+      card.dataset.rating = teacher.rating;
+      card.dataset.experience = parseInt(teacher.experience);
+      card.dataset.availability = teacher.availability.toLowerCase();
+      card.dataset.students = teacher.students;
+
+      // Generate stars HTML
+      const stars = '⭐'.repeat(Math.floor(teacher.rating)) + (teacher.rating % 1 >= 0.5 ? '½' : '');
+
+      // Generate subjects HTML
+      const subjectsHTML = teacher.subjects.map(subject =>
+        `<span class="subject-tag">${subject}</span>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="teacher-header">
+          <div class="teacher-avatar">${teacher.avatarLetter}</div>
+          <div class="teacher-info">
+            <h3>${teacher.name}</h3>
+            <div class="teacher-title">${teacher.title}</div>
+          </div>
+        </div>
+        
+        <div class="rating">
+          <div class="stars">${stars}</div>
+          <div class="rating-value">${teacher.rating.toFixed(1)}</div>
+          <div style="color: #666; margin-left: auto;">(${teacher.ratingCount} reviews)</div>
+        </div>
+        
+        <div class="subjects">
+          ${subjectsHTML}
+        </div>
+        
+        <div class="teacher-details">
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div>${teacher.experience} experience</div>
+          </div>
+          
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div>${teacher.students} students taught</div>
+          </div>
+          
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div>Available: ${teacher.availability}</div>
+          </div>
+          
+          <div class="detail-item">
+            <div class="detail-icon">
+              <i class="fas fa-language"></i>
+            </div>
+            <div>Languages: ${teacher.language}</div>
+          </div>
+        </div>
+        
+        <div class="teacher-actions">
+          <button class="connect-btn" onclick="connectTeacher('${teacher.id}')">
+            <i class="fas fa-comments"></i> Connect Now
+          </button>
+          <button class="profile-btn" onclick="viewProfile('${teacher.id}')">
+            <i class="fas fa-user"></i> View Profile
+          </button>
+        </div>
+      `;
+
+      return card;
+    }
+
+    // Filter teachers based on criteria
+    function filterTeachers() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const subjectFilter = document.getElementById('subjectFilter').value.toLowerCase();
+      const ratingFilter = parseFloat(document.getElementById('ratingFilter').value);
+      const experienceFilter = parseInt(document.getElementById('experienceFilter').value);
+      const availabilityFilter = document.getElementById('availabilityFilter').value.toLowerCase();
+
+      const filteredTeachers = teachers.filter(teacher => {
+        // Search filter
+        if (searchTerm && !teacher.name.toLowerCase().includes(searchTerm) &&
+          !teacher.title.toLowerCase().includes(searchTerm) &&
+          !teacher.subjects.some(sub => sub.toLowerCase().includes(searchTerm))) {
+          return false;
+        }
+
+        // Subject filter
+        if (subjectFilter && !teacher.subjects.some(sub => sub.toLowerCase().includes(subjectFilter))) {
+          return false;
+        }
+
+        // Rating filter
+        if (ratingFilter > 0 && teacher.rating < ratingFilter) {
+          return false;
+        }
+
+        // Experience filter
+        const expYears = parseInt(teacher.experience);
+        if (experienceFilter > 0 && expYears < experienceFilter) {
+          return false;
+        }
+
+        // Availability filter
+        if (availabilityFilter && !teacher.availability.toLowerCase().includes(availabilityFilter)) {
+          return false;
+        }
+
+        return true;
+      });
+
+      // Apply sorting
+      const sortBy = document.getElementById('sortFilter').value;
+      sortTeachersArray(filteredTeachers, sortBy);
+
+      renderTeachers(filteredTeachers);
+    }
+
+    // Sort teachers array
+    function sortTeachersArray(teacherArray, sortBy) {
+      switch (sortBy) {
+        case 'rating':
+          teacherArray.sort((a, b) => b.rating - a.rating);
+          break;
+        case 'experience':
+          teacherArray.sort((a, b) =>
+            parseInt(b.experience) - parseInt(a.experience)
+          );
+          break;
+        case 'students':
+          teacherArray.sort((a, b) => b.students - a.students);
+          break;
+      }
+    }
+
+    // Sort teachers
+    function sortTeachers() {
+      filterTeachers();
+    }
+
+    // Update teacher count
+    function updateTeacherCount(count) {
+      const countElement = document.getElementById('teacherCount');
+      countElement.textContent = `${count || teachers.length} Teachers`;
+    }
+
+    // Connect with teacher
+    async function connectTeacher(teacherId) {
+      const teacher = teachers.find(t => t.id === teacherId);
+      const learnerId = localStorage.getItem('skillSwapUserId');
+
+      if (!learnerId) {
+        alert('Please log in to connect with teachers');
+        return;
+      }
+
+      if (teacher.isReal) {
+        // Send actual connection request to database
+        try {
+          const realTeacherId = teacherId.replace('real_', '');
+          const subject = teacher.subjects ? teacher.subjects[0] : 'General Interest';
+          await fetch('/api/connect', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ learnerId, teacherId: realTeacherId, subject })
+          });
+        } catch (e) {
+          console.error("Error sending connection request", e);
+        }
+
+        // Redirect to Messages to chat
+        const chatUser = {
+          id: teacher.id,
+          name: teacher.name,
+          avatar: teacher.name.charAt(0).toUpperCase(),
+          status: 'Online',
+          lastMessage: 'Hi! I saw your profile and would like to learn from you.',
+          time: 'Now',
+          unread: 0,
+          type: 'real',
+          isReal: true // Added for consistency
+        };
+
+        localStorage.setItem('currentChatUser', JSON.stringify(chatUser));
+
+        if (confirm(`Connection request sent to ${teacher.name}! Would you like to start a conversation with them now?`)) {
+          window.location.href = 'messages.html';
+        }
+      } else {
+        // Dummy user behavior
+        alert(`Connecting you with ${teacher.name}...\n\nWe'll send a connection request to ${teacher.name}. They usually respond within 24 hours.`);
+        setTimeout(() => {
+          alert(`Connection request sent to ${teacher.name}! You'll be notified when they accept.`);
+        }, 500);
+      }
+    }
+
+    // View teacher profile
+    function viewProfile(teacherId) {
+      const teacher = teachers.find(t => t.id === teacherId);
+
+      const details = `Name: ${teacher.name}
+Title: ${teacher.title}
+Experience: ${teacher.experience}
+Rating: ${teacher.rating} ⭐ (${teacher.ratingCount} reviews)
+Subjects: ${teacher.subjects.join(', ')}
+Availability: ${teacher.availability}
+Languages: ${teacher.language}
+Students Taught: ${teacher.students}`;
+
+      if (teacher.isReal) {
+        alert(`Real Community Profile:\n\n${details}\n\n(This is a registered user on the platform)`);
+      } else {
+        alert(`Teacher Profile:\n\n${details}`);
+      }
+    }
+  </script>
+</body>
+
+</html>

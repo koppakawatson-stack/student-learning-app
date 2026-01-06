@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwapSkill - Login & Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      max-width: 900px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(74, 108, 247, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #4a6cf7;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      padding-right: 45px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9f9;
+      color: #333;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: #4a6cf7;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+      background: #fff;
+    }
+
+    .toggle-eye {
+      position: absolute;
+      right: 15px;
+      top: 38px;
+      cursor: pointer;
+      color: #666;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .toggle-eye:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #4a6cf7;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(74, 108, 247, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+      padding: 0.9rem;
+      box-shadow: none;
+    }
+
+    .google-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .google-icon {
+      width: 20px;
+      height: 20px;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjRhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNMy42IDEwLjdhNS40IDUuNCAwIDAgMSAwLTMuNFY1SDFhOSA5IDAgMCAwIDAgOGwzLjYtMi45eiIgZmlsbD0iI0ZBQ0EyNCIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTkgMy42YzEuMyAwIDIuNS40IDMuNCAxLjJMMTUgMUMxMy4hLS4yIDExLS4yIDkgMy42eiIgZmlsbD0iIzVBQzNENyIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjwvc3ZnPg==') no-repeat;
+      background-size: contain;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: #999;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+
+    .divider span {
+      padding: 0 1rem;
+      font-size: 0.9rem;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: -0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .forgot-password a {
+      color: #4a6cf7;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .forgot-password a:hover {
+      color: #6a8eff;
+      background: rgba(74, 108, 247, 0.1);
+      text-decoration: none;
+    }
+
+    .switch-form {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .switch-form a {
+      color: #4a6cf7;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 0.5rem;
+      transition: all 0.3s;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .switch-form a:hover {
+      color: #6a8eff;
+      background: rgba(74, 108, 247, 0.1);
+    }
+
+    .error-message {
+      background: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(220, 53, 69, 0.3);
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(40, 167, 69, 0.3);
+      display: none;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Login Card -->
+    <div class="card" id="login-card">
+      <h2>Login</h2>
+      <p class="subtitle">Welcome back to SwapSkill</p>
+
+      <div class="error-message" id="login-error"></div>
+      <div class="success-message" id="login-success"></div>
+
+      <form id="login-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>Username or Email</label>
+          <input type="text" id="login-username" placeholder="Enter username or email" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" required>
+          <button type="button" class="toggle-eye" onclick="togglePassword('login-password', this)">👁</button>
+        </div>
+
+        <div class="forgot-password">
+          <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+        </div>
+
+        <button type="button" class="btn" onclick="handleLogin()">Login</button>
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <button type="button" class="btn google-btn" onclick="googleLogin()">
+          <span class="google-icon"></span>
+          Continue with Google
+        </button>
+      </form>
+
+      <div class="switch-form">
+        Don't have an account?
+        <a href="#" onclick="showSignup()">Sign Up</a>
+      </div>
+    </div>
+
+    <!-- Signup Card -->
+    <div class="card" id="signup-card" style="display: none;">
+      <h2>Sign Up</h2>
+      <p class="subtitle">Join SwapSkill community</p>
+
+      <div class="error-message" id="signup-error"></div>
+      <div class="success-message" id="signup-success"></div>
+
+      <form id="signup-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signup-email" placeholder="example@gmail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="signup-username" placeholder="Choose a username" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="At least 6 characters" required>
+          <button type="button" class="toggle-eye" onclick="togglePassword('signup-password', this)">👁</button>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+          <button type="button" class="toggle-eye" onclick="togglePassword('signup-confirm-password', this)">👁</button>
+        </div>
+
+        <button type="button" class="btn" onclick="handleSignup()">Create Account</button>
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <button type="button" class="btn google-btn" onclick="googleSignup()">
+          <span class="google-icon"></span>
+          Sign up with Google
+        </button>
+      </form>
+
+      <div class="switch-form">
+        Already have an account?
+        <a href="#" onclick="showLogin()">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle password visibility
+    function togglePassword(fieldId, button) {
+      const field = document.getElementById(fieldId);
+      const isPassword = field.type === "password";
+      field.type = isPassword ? "text" : "password";
+      button.textContent = isPassword ? "🙈" : "👁";
+    }
+
+    // Show/hide cards (for in-page toggle)
+    function showSignup() {
+      document.getElementById('login-card').style.display = 'none';
+      document.getElementById('signup-card').style.display = 'block';
+      clearMessages();
+    }
+
+    function showLogin() {
+      document.getElementById('signup-card').style.display = 'none';
+      document.getElementById('login-card').style.display = 'block';
+      clearMessages();
+    }
+
+    // Clear all messages
+    function clearMessages() {
+      const messages = document.querySelectorAll('.error-message, .success-message');
+      messages.forEach(msg => {
+        msg.style.display = 'none';
+        msg.textContent = '';
+      });
+    }
+
+    // Show error message
+    function showError(card, message) {
+      const errorDiv = document.getElementById(card + '-error');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+
+    // Show success message
+    function showSuccess(card, message) {
+      const successDiv = document.getElementById(card + '-success');
+      successDiv.textContent = message;
+      successDiv.style.display = 'block';
+    }
+
+    // Email validation
+    function isValidEmail(email) {
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      return emailPattern.test(email);
+    }
+
+    // Login function - Uses Backend API
+    async function handleLogin() {
+      const usernameInput = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      clearMessages();
+
+      // Validation
+      if (!usernameInput) {
+        showError('login', 'Please enter username or email');
+        return;
+      }
+      if (!password) {
+        showError('login', 'Please enter password');
+        return;
+      }
+
+      showSuccess('login', 'Authenticating...');
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ login: usernameInput, password: password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showSuccess('login', 'Login successful! Redirecting...');
+
+          // Save to localStorage
+          localStorage.setItem('skillSwapIsLoggedIn', 'true');
+          localStorage.setItem('skillSwapUsername', data.user.username);
+          localStorage.setItem('skillSwapEmail', data.user.email);
+          localStorage.setItem('skillSwapUserId', data.user.id); // Important for profile API
+
+          // Fetch profile to sync local state
+          try {
+            const profileRes = await fetch(`/api/profile/${data.user.id}`);
+            const profileData = await profileRes.json();
+            if (profileRes.ok && profileData.user_id) {
+              localStorage.setItem('swapSkillProfile', JSON.stringify(profileData));
+            }
+          } catch (e) { console.error("Profile sync error", e); }
+
+          setTimeout(() => {
+            window.location.href = "dashboard2.html";
+          }, 1000);
+        } else {
+          showError('login', data.error || 'Login failed');
+        }
+      } catch (e) {
+        showError('login', 'Connection error. Ensure server is running.');
+        console.error(e);
+      }
+    }
+
+    // Signup function - Uses Backend API
+    async function handleSignup() {
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const username = document.getElementById('signup-username').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+      clearMessages();
+
+      if (!name || !email || !username || !password) {
+        showError('signup', 'Please fill in all fields');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError('signup', 'Passwords do not match');
+        return;
+      }
+
+      showSuccess('signup', 'Creating account...');
+
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password }) // ignoring name for now as per DB schema
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showSuccess('signup', 'Account created! Logging you in...');
+
+          // Auto login locally
+          localStorage.setItem('skillSwapIsLoggedIn', 'true');
+          localStorage.setItem('skillSwapUsername', username);
+          localStorage.setItem('skillSwapEmail', email);
+          localStorage.setItem('skillSwapUserId', data.user.id);
+
+          setTimeout(() => {
+            window.location.href = "profile.html";
+          }, 1500);
+        } else {
+          showError('signup', data.error || 'Signup failed');
+        }
+      } catch (e) {
+        showError('signup', 'Connection error. Ensure server is running.');
+        console.error(e);
+      }
+    }
+
+    // Google login/signup - UPDATED TO REDIRECT TO PROFILE.HTML
+    function googleLogin() {
+      showSuccess('login', 'Redirecting to Google login...');
+
+      // Save Google login details to localStorage for dashboard
+      localStorage.setItem('skillSwapIsLoggedIn', 'true');
+      localStorage.setItem('skillSwapUsername', 'Google User');
+      localStorage.setItem('skillSwapEmail', 'googleuser@gmail.com');
+
+      // ✅ REDIRECT TO PROFILE.HTML AFTER 1.5 SECONDS
+      setTimeout(() => {
+        window.location.href = "profile.html";
+      }, 1500);
+    }
+
+    function googleSignup() {
+      // Redirect to Google signup on signup.html page
+      window.location.href = "signup.html";
+    }
+
+    // Forgot password
+    function showForgotPassword() {
+      const email = prompt("Please enter your email address to reset password:");
+      if (email && isValidEmail(email)) {
+        showSuccess('login', 'Password reset link sent to your email!');
+      } else if (email) {
+        showError('login', 'Please enter a valid email address');
+      }
+    }
+
+    // Enter key support
+    document.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const activeCard = document.getElementById('login-card').style.display !== 'none' ? 'login' : 'signup';
+        if (activeCard === 'login') {
+          handleLogin();
+        } else {
+          handleSignup();
+        }
+      }
+    });
+
+    // Initialize with login form only
+    showLogin();
+  </script>
+</body>
+
+</html>

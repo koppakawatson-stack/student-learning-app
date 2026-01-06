@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwapSkill - Peer-to-Peer Learning Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 50px;
+      background: rgba(255, 255, 255, 0.95);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid #4a6cf7;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      font-size: 2.2rem;
+      color: #4a6cf7;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #4a6cf7;
+      letter-spacing: 1.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 35px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(74, 108, 247, 0.1);
+      color: #4a6cf7;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 50px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(74, 108, 247, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(74, 108, 247, 0.05) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: #333;
+      margin-bottom: 25px;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.8rem;
+      color: #666;
+      margin-bottom: 40px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      color: white;
+      padding: 18px 45px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(74, 108, 247, 0.3);
+      margin-top: 30px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(74, 108, 247, 0.4);
+      background: linear-gradient(135deg, #6a8eff, #4a6cf7);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 100px 50px;
+      background: white;
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 70px;
+      color: #333;
+      font-weight: 800;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: #4a6cf7;
+      box-shadow: 0 20px 40px rgba(74, 108, 247, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      color: #4a6cf7;
+      margin-bottom: 25px;
+    }
+
+    .feature-title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .feature-desc {
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about {
+      padding: 100px 50px;
+      background: #f8f9ff;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-title {
+      font-size: 3.5rem;
+      color: #333;
+      margin-bottom: 50px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text h3 {
+      font-size: 2.2rem;
+      color: #4a6cf7;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .about-text p {
+      font-size: 1.2rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .about-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .visual-item {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      border-left: 5px solid #4a6cf7;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .visual-title {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .visual-desc {
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Stats Section */
+    .stats {
+      padding: 80px 50px;
+      background: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(74, 108, 247, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #4a6cf7;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 1.3rem;
+      color: #666;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 60px 50px 30px;
+      background: white;
+      border-top: 1px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #4a6cf7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #4a6cf7;
+    }
+
+    .copyright {
+      text-align: center;
+      color: #666;
+      font-size: 1rem;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+
+      .section-title,
+      .about-title {
+        font-size: 2.8rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      .hero {
+        padding: 150px 20px 50px;
+      }
+
+      .hero-title {
+        font-size: 2.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.4rem;
+      }
+
+      .features,
+      .about,
+      .stats {
+        padding: 60px 20px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title,
+      .about-title {
+        font-size: 2.2rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .section-title,
+      .about-title {
+        font-size: 1.8rem;
+      }
+
+      .feature-card,
+      .visual-item {
+        padding: 25px;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.6s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-exchange-alt"></i>
+      </div>
+      <div class="logo-text">SWAPSKILL</div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#hero">HOME</a></li>
+      <li><a href="#features">FEATURES</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <!-- UPDATED: Redirects to login2.html -->
+      <li><a href="login2.html">GET STARTED</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title animate">
+        REVOLUTIONIZE LEARNING WITH PEER-TO-PEER SKILL EXCHANGE
+      </h1>
+      <p class="hero-subtitle animate delay-1">
+        Teach what you know, learn what you want. A collaborative platform where students exchange skills, grow
+        together, and build knowledge communities.
+      </p>
+      <!-- UPDATED: Redirects to login2.html -->
+      <a href="login2.html" class="cta-button animate delay-2">
+        <i class="fas fa-rocket"></i> LAUNCH YOUR LEARNING JOURNEY
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2 class="section-title animate">KEY FEATURES</h2>
+
+    <div class="features-grid">
+      <div class="feature-card animate">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3 class="feature-title">PEER NETWORKING</h3>
+        <p class="feature-desc">
+          Connect with students worldwide who match your teaching and learning interests. Build meaningful educational
+          relationships.
+        </p>
+      </div>
+
+      <div class="feature-card animate delay-1">
+        <div class="feature-icon">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h3 class="feature-title">SMART SCHEDULING</h3>
+        <p class="feature-desc">
+          Easily schedule classes, set availability, and manage your teaching/learning calendar with intuitive tools.
+        </p>
+      </div>
+
+      <div class="feature-card animate delay-2">
+        <div class="feature-icon">
+          <i class="fas fa-video"></i>
+        </div>
+        <h3 class="feature-title">VIRTUAL CLASSROOMS</h3>
+        <p class="feature-desc">
+          Integrated video calls, chat, screen sharing, and collaborative whiteboards for seamless remote learning.
+        </p>
+      </div>
+
+      <div class="feature-card animate">
+        <div class="feature-icon">
+          <i class="fas fa-award"></i>
+        </div>
+        <h3 class="feature-title">ACHIEVEMENT SYSTEM</h3>
+        <p class="feature-desc">
+          Earn certificates, badges, and recognition for both teaching and learning accomplishments.
+        </p>
+      </div>
+
+      <div class="feature-card animate delay-1">
+        <div class="feature-icon">
+          <i class="fas fa-book"></i>
+        </div>
+        <h3 class="feature-title">RESOURCE HUB</h3>
+        <p class="feature-desc">
+          Access shared learning materials, tutorials, and community-created resources across all subjects.
+        </p>
+      </div>
+
+      <div class="feature-card animate delay-2">
+        <div class="feature-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3 class="feature-title">SKILL MATCHING</h3>
+        <p class="feature-desc">
+          Advanced algorithm matches you with perfect learning partners based on skills, interests, and availability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="about-container">
+      <h2 class="about-title animate">OUR MISSION</h2>
+
+      <div class="about-content">
+        <div class="about-text animate">
+          <h3>BRIDGING THE KNOWLEDGE GAP</h3>
+          <p>
+            Traditional education systems often create one-way learning paths where knowledge flows from teachers to
+            students.
+            We believe every student has valuable skills to share and unique knowledge to gain.
+          </p>
+          <p>
+            SwapSkill breaks down these barriers by creating a two-way street of knowledge exchange.
+            Whether you're an expert in Python, a photography enthusiast, or a language learner,
+            you have something to teach and something to learn.
+          </p>
+          <p>
+            Our platform democratizes education by removing financial barriers and fostering genuine
+            collaborative learning communities.
+          </p>
+        </div>
+
+        <div class="about-visual">
+          <div class="visual-item animate delay-1">
+            <h4 class="visual-title">THE PROBLEM</h4>
+            <p class="visual-desc">
+              Students struggle to find affordable learning opportunities and peers with complementary skills.
+              Traditional platforms are expensive and lack mutual exchange.
+            </p>
+          </div>
+
+          <div class="visual-item animate delay-2">
+            <h4 class="visual-title">THE SOLUTION</h4>
+            <p class="visual-desc">
+              A free, peer-to-peer platform where students list skills they can teach and skills they want to learn,
+              creating perfect matches for mutual growth.
+            </p>
+          </div>
+
+          <div class="visual-item animate delay-3">
+            <h4 class="visual-title">THE IMPACT</h4>
+            <p class="visual-desc">
+              Creating accessible education ecosystems, building student networks, and fostering lifelong
+              collaborative learning habits.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-card animate">
+        <div class="stat-number">10,000+</div>
+        <div class="stat-label">ACTIVE LEARNERS</div>
+      </div>
+
+      <div class="stat-card animate delay-1">
+        <div class="stat-number">5,000+</div>
+        <div class="stat-label">SKILLS EXCHANGED</div>
+      </div>
+
+      <div class="stat-card animate delay-2">
+        <div class="stat-number">25,000+</div>
+        <div class="stat-label">HOURS TAUGHT</div>
+      </div>
+
+      <div class="stat-card animate delay-3">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">COUNTRIES</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">SWAPSKILL</div>
+
+      <div class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <!-- UPDATED: Redirects to login2.html -->
+        <a href="login2.html">Get Started</a>
+      </div>
+    </div>
+
+    <div class="copyright">
+      © 2023 SwapSkill | Hackathon Project | Revolutionizing Peer-to-Peer Learning
+    </div>
+  </footer>
+
+  <script>
+    // Add animation classes on scroll
+    document.addEventListener('DOMContentLoaded', function () {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      // Observe all elements with animation classes
+      document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

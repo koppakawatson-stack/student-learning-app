@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwapSkill - Complete Your Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px 0;
+      border-bottom: 2px solid #4a6cf7;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      color: #4a6cf7;
+    }
+
+    .logo-text {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #4a6cf7;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(74, 108, 247, 0.1);
+      border-radius: 4px;
+      margin: 30px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #4a6cf7, #6a8eff);
+      width: 25%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .profile-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    @media (max-width: 900px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .education-levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .level-option {
+      background: white;
+      border: 1px solid rgba(74, 108, 247, 0.15);
+      border-radius: 12px;
+      padding: 20px 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .level-option:hover {
+      border-color: #4a6cf7;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(74, 108, 247, 0.15);
+    }
+
+    .level-option.selected {
+      background: rgba(74, 108, 247, 0.05);
+      border-color: #4a6cf7;
+      box-shadow: 0 5px 15px rgba(74, 108, 247, 0.2);
+    }
+
+    .level-icon {
+      font-size: 2rem;
+      color: #4a6cf7;
+      margin-bottom: 10px;
+    }
+
+    .level-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Skill Blocks */
+    .skill-blocks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .skill-blocks {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .skill-block {
+      background: white;
+      border: 1px solid rgba(74, 108, 247, 0.15);
+      border-radius: 15px;
+      padding: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .skill-block:hover {
+      border-color: #4a6cf7;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(74, 108, 247, 0.15);
+    }
+
+    .skill-block.selected {
+      background: rgba(74, 108, 247, 0.05);
+      border-color: #4a6cf7;
+      box-shadow: 0 5px 15px rgba(74, 108, 247, 0.2);
+    }
+
+    .skill-icon {
+      font-size: 3rem;
+      color: #4a6cf7;
+      margin-bottom: 15px;
+    }
+
+    .skill-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .skill-desc {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Subjects Container */
+    .subjects-container {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .subjects-container.active {
+      display: block;
+    }
+
+    .subject-search {
+      width: 100%;
+      padding: 15px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      color: #333;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .subject-search:focus {
+      outline: none;
+      border-color: #4a6cf7;
+      box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .subject-option {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #333;
+    }
+
+    .subject-option:hover {
+      border-color: #4a6cf7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .subject-option.selected {
+      background: rgba(74, 108, 247, 0.1);
+      border-color: #4a6cf7;
+      font-weight: 600;
+    }
+
+    .ai-test-btn {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .ai-test-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 108, 247, 0.4);
+    }
+
+    /* Languages Section */
+    .languages-section {
+      grid-column: 1 / -1;
+    }
+
+    .language-search-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .language-search {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      color: #333;
+      font-size: 1rem;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #4a6cf7;
+    }
+
+    .selected-languages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      min-height: 50px;
+    }
+
+    .language-tag {
+      background: rgba(74, 108, 247, 0.1);
+      border: 1px solid #4a6cf7;
+      border-radius: 20px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #4a6cf7;
+      font-weight: 600;
+    }
+
+    .remove-language {
+      background: none;
+      border: none;
+      color: #4a6cf7;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .languages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .language-option {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      color: #333;
+    }
+
+    .language-option:hover {
+      border-color: #4a6cf7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .language-option.selected {
+      background: rgba(74, 108, 247, 0.1);
+      border-color: #4a6cf7;
+      font-weight: 600;
+    }
+
+    /* Continue Button */
+    .continue-container {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .continue-btn {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      color: white;
+      border: none;
+      padding: 18px 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+
+    .continue-btn:hover:not(:disabled) {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(74, 108, 247, 0.4);
+    }
+
+    .continue-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Requirements Info */
+    .requirements-info {
+      background: rgba(74, 108, 247, 0.05);
+      border: 1px solid rgba(74, 108, 247, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .requirements-info h4 {
+      color: #4a6cf7;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .requirements-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .requirements-list li {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .requirements-list li i {
+      color: #4a6cf7;
+      font-size: 0.8rem;
+    }
+
+    .requirement-met {
+      color: #4CAF50 !important;
+    }
+
+    .requirement-not-met {
+      color: #F44336 !important;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #e6e6e6;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #4a6cf7;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6a8eff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-exchange-alt logo-icon"></i>
+        <span class="logo-text">SWAPSKILL</span>
+      </div>
+      <h1>Complete Your Profile</h1>
+      <p>Set up your learning preferences to get personalized skill exchange recommendations</p>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Main Profile Container -->
+    <div class="profile-container">
+      <!-- Education Level -->
+      <div class="section">
+        <h2 class="section-title">
+          <i class="fas fa-graduation-cap"></i> Education Level
+        </h2>
+        <div class="education-levels">
+          <div class="level-option" onclick="selectLevel('school')">
+            <div class="level-icon">
+              <i class="fas fa-school"></i>
+            </div>
+            <div class="level-name">School</div>
+          </div>
+
+          <div class="level-option" onclick="selectLevel('intermediate')">
+            <div class="level-icon">
+              <i class="fas fa-book-reader"></i>
+            </div>
+            <div class="level-name">Intermediate</div>
+          </div>
+
+          <div class="level-option" onclick="selectLevel('btech')">
+            <div class="level-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="level-name">B.Tech/B.E.</div>
+          </div>
+
+          <div class="level-option" onclick="selectLevel('bsc')">
+            <div class="level-icon">
+              <i class="fas fa-flask"></i>
+            </div>
+            <div class="level-name">B.Sc.</div>
+          </div>
+
+          <div class="level-option" onclick="selectLevel('bcom')">
+            <div class="level-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="level-name">B.Com</div>
+          </div>
+
+          <div class="level-option" onclick="selectLevel('other')">
+            <div class="level-icon">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="level-name">Other Degree</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill Preferences -->
+      <div class="section">
+        <h2 class="section-title">
+          <i class="fas fa-brain"></i> Skill Preferences
+        </h2>
+
+        <div class="skill-blocks">
+          <div class="skill-block" id="learn-block" onclick="toggleSkillBlock('learn')">
+            <div class="skill-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="skill-title">I Want to Learn</h3>
+            <p class="skill-desc">Select subjects you want to learn from peers</p>
+          </div>
+
+          <div class="skill-block" id="teach-block" onclick="toggleSkillBlock('teach')">
+            <div class="skill-icon">
+              <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <h3 class="skill-title">I Want to Teach</h3>
+            <p class="skill-desc">Select subjects you can teach to others</p>
+          </div>
+        </div>
+
+        <!-- Subjects for Learning -->
+        <div class="subjects-container" id="learn-subjects">
+          <h3 style="color: #4a6cf7; margin-bottom: 15px;">Select Subjects to Learn</h3>
+          <input type="text" class="subject-search" placeholder="Search subjects..." oninput="searchSubjects('learn')">
+          <div class="subjects-grid" id="learn-grid"></div>
+        </div>
+
+        <!-- Subjects for Teaching -->
+        <div class="subjects-container" id="teach-subjects">
+          <h3 style="color: #4a6cf7; margin-bottom: 15px;">Select Subjects to Teach</h3>
+          <input type="text" class="subject-search" placeholder="Search subjects..." oninput="searchSubjects('teach')">
+          <div class="subjects-grid" id="teach-grid"></div>
+          <button class="ai-test-btn" onclick="openAITest()">
+            <i class="fas fa-robot"></i> Take AI Proficiency Test
+          </button>
+        </div>
+      </div>
+
+      <!-- Language Preferences -->
+      <div class="section languages-section">
+        <h2 class="section-title">
+          <i class="fas fa-language"></i> Preferred Languages
+        </h2>
+
+        <div class="language-search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" class="language-search" placeholder="Search languages..." oninput="searchLanguages()">
+        </div>
+
+        <div class="selected-languages" id="selected-languages"></div>
+
+        <div class="languages-grid" id="languages-grid"></div>
+      </div>
+    </div>
+
+    <!-- Requirements Info -->
+    <div class="requirements-info">
+      <h4>Requirements to Continue:</h4>
+      <ul class="requirements-list">
+        <li id="req-education">
+          <i class="fas fa-check-circle"></i> Select education level
+        </li>
+        <li id="req-course">
+          <i class="fas fa-check-circle"></i> Select at least one course (Learn or Teach)
+        </li>
+        <li id="req-subject">
+          <i class="fas fa-check-circle"></i> Select at least one subject
+        </li>
+        <li id="req-language">
+          <i class="fas fa-check-circle"></i> Select at least one language
+        </li>
+      </ul>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="continue-container">
+      <button class="continue-btn" id="continue-btn" onclick="completeProfile()" disabled>
+        <i class="fas fa-rocket"></i> Continue to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Data storage
+    let profileData = {
+      educationLevel: null,
+      learnSubjects: [],
+      teachSubjects: [],
+      languages: [],
+      aiTestScore: null
+    };
+
+    // Subjects database
+    const subjects = {
+      school: [
+        "Mathematics", "Science", "English", "Social Studies", "Hindi",
+        "Computer Basics", "Art", "Music", "Physical Education", "Sanskrit",
+        "Environmental Studies", "General Knowledge"
+      ],
+      intermediate: [
+        "Mathematics", "Physics", "Chemistry", "Biology", "English",
+        "Computer Science", "Economics", "Business Studies", "Accountancy",
+        "Psychology", "Sociology", "Political Science", "History", "Geography",
+        "Fine Arts", "Physical Education", "Statistics", "Information Technology"
+      ],
+      btech: [
+        "Data Structures", "Algorithms", "Computer Networks", "Database Management",
+        "Operating Systems", "Software Engineering", "Web Development", "Machine Learning",
+        "Artificial Intelligence", "Cloud Computing", "Cyber Security", "Mobile Development",
+        "Computer Architecture", "Digital Electronics", "Microprocessors", "Embedded Systems"
+      ],
+      bsc: [
+        "Mathematics", "Physics", "Chemistry", "Biology", "Biotechnology",
+        "Microbiology", "Statistics", "Computer Science", "Environmental Science",
+        "Geology", "Astronomy", "Botany", "Zoology", "Genetics", "Biochemistry"
+      ],
+      bcom: [
+        "Accounting", "Business Law", "Economics", "Business Management",
+        "Marketing", "Finance", "Taxation", "Banking", "Insurance",
+        "Auditing", "Cost Accounting", "Business Statistics", "E-Commerce"
+      ],
+      other: [
+        "Photography", "Graphic Design", "Video Editing", "Creative Writing",
+        "Public Speaking", "Cooking", "Music Theory", "Drawing", "Yoga",
+        "Meditation", "Foreign Languages", "Digital Marketing", "Entrepreneurship"
+      ]
+    };
+
+    // Languages database
+    const languages = [
+      "English", "Hindi", "Spanish", "French", "German", "Chinese", "Japanese",
+      "Korean", "Russian", "Arabic", "Portuguese", "Italian", "Bengali", "Tamil",
+      "Telugu", "Marathi", "Gujarati", "Kannada", "Malayalam", "Punjabi",
+      "Urdu", "Sanskrit", "Sign Language", "Latin", "Greek"
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async function () {
+      populateLanguages();
+
+      // Try to load profile from localStorage first (sync check)
+      const userId = localStorage.getItem('skillSwapUserId');
+      if (userId) {
+        try {
+          // Fetch from API
+          const res = await fetch(`/api/profile/${userId}`);
+          if (res.ok) {
+            const dbProfile = await res.json();
+            if (dbProfile.user_id) {
+              // Merge DB data
+              profileData.educationLevel = dbProfile.educationLevel || null;
+              profileData.learnSubjects = dbProfile.learnSubjects || [];
+              profileData.teachSubjects = dbProfile.teachSubjects || [];
+              profileData.languages = dbProfile.languages || [];
+              if (dbProfile.proficiencyTest) profileData.aiTestScore = dbProfile.proficiencyTest;
+
+              // Helper: Trigger UI updates
+              if (profileData.educationLevel) selectLevel(profileData.educationLevel);
+
+              // Restore Languages
+              if (profileData.languages.length) {
+                const langGrid = document.getElementById('languages-grid');
+                // Wait for populate? It's synch.
+                profileData.languages.forEach(lang => {
+                  // Find element
+                  const opts = document.querySelectorAll('.language-option');
+                  opts.forEach(o => {
+                    if (o.textContent === lang) o.classList.add('selected');
+                  });
+                });
+                updateSelectedLanguages();
+              }
+
+              // Restore subjects (Tricky without activating blocks first)
+              if (profileData.learnSubjects.length > 0) {
+                // Activate learn block
+                const block = document.getElementById('learn-block');
+                block.classList.add('selected');
+                document.getElementById('learn-subjects').classList.add('active');
+                populateSubjects('learn');
+                // Select subjects
+                setTimeout(() => {
+                  profileData.learnSubjects.forEach(sub => {
+                    const grid = document.getElementById('learn-grid');
+                    const opts = grid.querySelectorAll('.subject-option');
+                    opts.forEach(o => { if (o.textContent === sub) o.classList.add('selected'); });
+                  });
+                }, 50);
+              }
+
+              if (profileData.teachSubjects.length > 0) {
+                // Activate teach block
+                const block = document.getElementById('teach-block');
+                block.classList.add('selected');
+                document.getElementById('teach-subjects').classList.add('active');
+                populateSubjects('teach');
+                setTimeout(() => {
+                  profileData.teachSubjects.forEach(sub => {
+                    const grid = document.getElementById('teach-grid');
+                    const opts = grid.querySelectorAll('.subject-option');
+                    opts.forEach(o => { if (o.textContent === sub) o.classList.add('selected'); });
+                  });
+                }, 50);
+              }
+            }
+
+            // Check for localStorage override (from Test page redirect)
+            const local = JSON.parse(localStorage.getItem('swapSkillProfile') || '{}');
+            if (local.proficiencyTest) {
+              profileData.aiTestScore = local.proficiencyTest;
+            }
+          }
+        } catch (e) { console.error("Load error", e); }
+      }
+
+      updateProgress();
+      updateContinueButton();
+    });
+
+    // Select Education Level
+    function selectLevel(level) {
+      document.querySelectorAll('.level-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+
+      let target;
+      // Handle event vs programmatic call
+      if (typeof event !== 'undefined' && event && event.type === 'click') {
+        target = event.currentTarget;
+      } else {
+        // Find element programmatically
+        const options = document.querySelectorAll('.level-option');
+        for (let opt of options) {
+          if (opt.getAttribute('onclick').includes(`'${level}'`)) {
+            target = opt;
+            break;
+          }
+        }
+      }
+
+      if (target) {
+        target.classList.add('selected');
+        profileData.educationLevel = level;
+        updateProgress();
+        updateSubjects();
+        updateContinueButton();
+        updateRequirements();
+      }
+    }
+
+    // Toggle Skill Blocks
+    function toggleSkillBlock(type) {
+      const block = document.getElementById(`${type}-block`);
+      const subjectsContainer = document.getElementById(`${type}-subjects`);
+
+      // Toggle selection
+      block.classList.toggle('selected');
+
+      // Show/hide subjects container
+      if (block.classList.contains('selected')) {
+        subjectsContainer.classList.add('active');
+        // Populate subjects if not already populated
+        if (subjectsContainer.querySelector('.subjects-grid').children.length === 0) {
+          populateSubjects(type);
+        }
+      } else {
+        subjectsContainer.classList.remove('active');
+        // Clear selection
+        if (type === 'learn') {
+          profileData.learnSubjects = [];
+        } else {
+          profileData.teachSubjects = [];
+        }
+      }
+
+      updateProgress();
+      updateContinueButton();
+      updateRequirements();
+    }
+
+    // Populate Subjects
+    function populateSubjects(type) {
+      const grid = document.getElementById(`${type}-grid`);
+      const level = profileData.educationLevel || 'school';
+      const subjectList = subjects[level] || subjects.school;
+
+      grid.innerHTML = '';
+
+      subjectList.forEach(subject => {
+        const div = document.createElement('div');
+        div.className = 'subject-option';
+        div.textContent = subject;
+        div.onclick = () => toggleSubject(type, subject, div);
+        grid.appendChild(div);
+      });
+    }
+
+    // Update Subjects based on level
+    function updateSubjects() {
+      if (document.getElementById('learn-block').classList.contains('selected')) {
+        populateSubjects('learn');
+      }
+      if (document.getElementById('teach-block').classList.contains('selected')) {
+        populateSubjects('teach');
+      }
+    }
+
+    // Toggle Subject Selection
+    function toggleSubject(type, subject, element) {
+      element.classList.toggle('selected');
+
+      const subjectsArray = type === 'learn' ? profileData.learnSubjects : profileData.teachSubjects;
+
+      if (element.classList.contains('selected')) {
+        subjectsArray.push(subject);
+      } else {
+        const index = subjectsArray.indexOf(subject);
+        if (index > -1) {
+          subjectsArray.splice(index, 1);
+        }
+      }
+
+      updateContinueButton();
+      updateRequirements();
+    }
+
+    // Search Subjects
+    function searchSubjects(type) {
+      const searchTerm = event.target.value.toLowerCase();
+      const grid = document.getElementById(`${type}-grid`);
+      const options = grid.querySelectorAll('.subject-option');
+
+      options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        option.style.display = text.includes(searchTerm) ? 'block' : 'none';
+      });
+    }
+
+    // Populate Languages
+    function populateLanguages() {
+      const grid = document.getElementById('languages-grid');
+      grid.innerHTML = '';
+
+      languages.forEach(language => {
+        const div = document.createElement('div');
+        div.className = 'language-option';
+        div.textContent = language;
+        div.onclick = () => selectLanguage(language, div);
+        grid.appendChild(div);
+      });
+    }
+
+    // Select Language
+    function selectLanguage(language, element) {
+      if (!profileData.languages.includes(language)) {
+        profileData.languages.push(language);
+        element.classList.add('selected');
+        updateSelectedLanguages();
+        updateContinueButton();
+        updateRequirements();
+      }
+    }
+
+    // Remove Language
+    function removeLanguage(language) {
+      const index = profileData.languages.indexOf(language);
+      if (index > -1) {
+        profileData.languages.splice(index, 1);
+      }
+
+      // Remove selection from grid
+      document.querySelectorAll('.language-option').forEach(opt => {
+        if (opt.textContent === language) {
+          opt.classList.remove('selected');
+        }
+      });
+
+      updateSelectedLanguages();
+      updateContinueButton();
+      updateRequirements();
+    }
+
+    // Update Selected Languages Display
+    function updateSelectedLanguages() {
+      const container = document.getElementById('selected-languages');
+      container.innerHTML = '';
+
+      profileData.languages.forEach(language => {
+        const tag = document.createElement('div');
+        tag.className = 'language-tag';
+        tag.innerHTML = `
+          ${language}
+          <button class="remove-language" onclick="removeLanguage('${language}')">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        container.appendChild(tag);
+      });
+    }
+
+    // Search Languages
+    function searchLanguages() {
+      const searchTerm = event.target.value.toLowerCase();
+      const grid = document.getElementById('languages-grid');
+      const options = grid.querySelectorAll('.language-option');
+
+      options.forEach(option => {
+        const text = option.textContent.toLowerCase();
+        option.style.display = text.includes(searchTerm) ? 'block' : 'none';
+      });
+    }
+
+    // Update Progress Bar
+    function updateProgress() {
+      let progress = 0;
+      if (profileData.educationLevel) progress += 25;
+
+      // Course selection (learn or teach block selected)
+      const learnSelected = document.getElementById('learn-block').classList.contains('selected');
+      const teachSelected = document.getElementById('teach-block').classList.contains('selected');
+      if (learnSelected || teachSelected) progress += 25;
+
+      // Subject selection (at least one subject selected)
+      if (profileData.learnSubjects.length > 0 || profileData.teachSubjects.length > 0) progress += 25;
+
+      // Language selection
+      if (profileData.languages.length > 0) progress += 25;
+
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+
+    // Update Requirements Display
+    function updateRequirements() {
+      // Education requirement
+      const educationReq = document.getElementById('req-education');
+      if (profileData.educationLevel) {
+        educationReq.classList.add('requirement-met');
+        educationReq.classList.remove('requirement-not-met');
+        educationReq.innerHTML = '<i class="fas fa-check-circle"></i> Education level selected ✓';
+      } else {
+        educationReq.classList.remove('requirement-met');
+        educationReq.classList.add('requirement-not-met');
+        educationReq.innerHTML = '<i class="fas fa-times-circle"></i> Select education level';
+      }
+
+      // Course requirement (at least one course selected)
+      const courseReq = document.getElementById('req-course');
+      const learnSelected = document.getElementById('learn-block').classList.contains('selected');
+      const teachSelected = document.getElementById('teach-block').classList.contains('selected');
+      if (learnSelected || teachSelected) {
+        courseReq.classList.add('requirement-met');
+        courseReq.classList.remove('requirement-not-met');
+        courseReq.innerHTML = '<i class="fas fa-check-circle"></i> Course selected ✓';
+      } else {
+        courseReq.classList.remove('requirement-met');
+        courseReq.classList.add('requirement-not-met');
+        courseReq.innerHTML = '<i class="fas fa-times-circle"></i> Select at least one course (Learn or Teach)';
+      }
+
+      // Subject requirement (at least one subject selected)
+      const subjectReq = document.getElementById('req-subject');
+      const totalSubjects = profileData.learnSubjects.length + profileData.teachSubjects.length;
+      if (totalSubjects > 0) {
+        subjectReq.classList.add('requirement-met');
+        subjectReq.classList.remove('requirement-not-met');
+        subjectReq.innerHTML = `<i class="fas fa-check-circle"></i> ${totalSubjects} subject(s) selected ✓`;
+      } else {
+        subjectReq.classList.remove('requirement-met');
+        subjectReq.classList.add('requirement-not-met');
+        subjectReq.innerHTML = '<i class="fas fa-times-circle"></i> Select at least one subject';
+      }
+
+      // Language requirement
+      const languageReq = document.getElementById('req-language');
+      if (profileData.languages.length > 0) {
+        languageReq.classList.add('requirement-met');
+        languageReq.classList.remove('requirement-not-met');
+        languageReq.innerHTML = `<i class="fas fa-check-circle"></i> ${profileData.languages.length} language(s) selected ✓`;
+      } else {
+        languageReq.classList.remove('requirement-met');
+        languageReq.classList.add('requirement-not-met');
+        languageReq.innerHTML = '<i class="fas fa-times-circle"></i> Select at least one language';
+      }
+    }
+
+    // Update Continue Button State
+    function updateContinueButton() {
+      const btn = document.getElementById('continue-btn');
+
+      // Check all requirements
+      const educationMet = profileData.educationLevel !== null;
+      const courseMet = document.getElementById('learn-block').classList.contains('selected') ||
+        document.getElementById('teach-block').classList.contains('selected');
+      const subjectMet = (profileData.learnSubjects.length + profileData.teachSubjects.length) > 0;
+      const languageMet = profileData.languages.length > 0;
+
+      const canContinue = educationMet && courseMet && subjectMet && languageMet;
+
+      btn.disabled = !canContinue;
+
+      // Update requirements display
+      updateRequirements();
+    }
+
+    // Open AI Test - Redirect to test2.html
+    function openAITest() {
+      if (profileData.teachSubjects.length === 0) {
+        alert('Please select at least one subject to teach before taking the proficiency test.');
+        return;
+      }
+
+      // Save current profile data to localStorage
+      localStorage.setItem('swapSkillProfile', JSON.stringify(profileData));
+
+      // Get selected subject for the test
+      const selectedSubject = profileData.teachSubjects[0];
+
+      // Store the subject for the test page
+      localStorage.setItem('aiTestSubject', selectedSubject);
+
+      // Redirect to test2.html
+      window.location.href = 'test2.html';
+    }
+
+    // Complete Profile - Saves to Database
+    async function completeProfile() {
+      const userId = localStorage.getItem('skillSwapUserId');
+      if (!userId) {
+        alert("Session expired. Please login.");
+        window.location.href = 'login2.html';
+        return;
+      }
+
+      // Store locally
+      localStorage.setItem('swapSkillProfile', JSON.stringify(profileData));
+
+      // Show saving state
+      const btn = document.getElementById('continue-btn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to Database...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: userId,
+            educationLevel: profileData.educationLevel,
+            learnSubjects: profileData.learnSubjects,
+            teachSubjects: profileData.teachSubjects,
+            languages: profileData.languages,
+            proficiencyTest: profileData.aiTestScore
+          })
+        });
+
+        if (response.ok) {
+          // Success
+          setTimeout(() => {
+            window.location.href = 'dashboard2.html';
+          }, 500);
+        } else {
+          alert('Error saving profile. Please try again.');
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      } catch (e) {
+        console.error(e);
+        // Fallback to local if server offline
+        window.location.href = 'dashboard2.html';
+      }
+    }
+  </script>
+</body>
+
+</html>

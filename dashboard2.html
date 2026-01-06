@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillSwap - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    /* Header - Modern Clean Design */
+    .header {
+      background: white;
+      padding: 18px 40px;
+      border-bottom: 2px solid #4a6cf7;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .logo-text {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #4a6cf7;
+      letter-spacing: -0.5px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: white;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
+    }
+
+    .user-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .user-info p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(74, 108, 247, 0.4);
+    }
+
+    /* Notification Bar - Modern Design */
+    .notification-bar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 80px;
+      z-index: 99;
+      color: white;
+    }
+
+    .notification-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .notification-icon {
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .notification-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .notification-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .notification-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 6px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .notification-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .close-notification {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 5px;
+      opacity: 0.8;
+    }
+
+    .close-notification:hover {
+      opacity: 1;
+    }
+
+    /* Main Dashboard */
+    .dashboard {
+      padding: 30px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Welcome Card - Modern Design */
+    .welcome-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, white 0%, #f8f9ff 100%);
+    }
+
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, #4a6cf7, #6a8eff);
+    }
+
+    .welcome-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .user-welcome h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .user-role {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .role-badge {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      box-shadow: 0 4px 10px rgba(74, 108, 247, 0.3);
+    }
+
+    .role-text {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .continue-learning-section {
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.08), rgba(74, 108, 247, 0.04));
+      border-radius: 15px;
+      padding: 25px;
+      margin: 25px 0;
+      border: 2px dashed rgba(74, 108, 247, 0.2);
+    }
+
+    .continue-learning-section h3 {
+      font-size: 1.5rem;
+      color: #4a6cf7;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .continue-learning-section p {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .explore-btn {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+
+    .explore-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(74, 108, 247, 0.4);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    /* Cards - Modern Design */
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      border: none;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.1), rgba(74, 108, 247, 0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-size: 1.3rem;
+      color: #4a6cf7;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Upcoming Sessions - Modern Design */
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .session-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px;
+      background: rgba(74, 108, 247, 0.04);
+      border-radius: 12px;
+      border-left: 4px solid #4a6cf7;
+      transition: all 0.3s ease;
+    }
+
+    .session-item:hover {
+      background: rgba(74, 108, 247, 0.08);
+      transform: translateX(5px);
+    }
+
+    .session-details h4 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .session-details p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .session-time {
+      font-weight: 700;
+      color: #4a6cf7;
+      font-size: 1rem;
+      background: rgba(74, 108, 247, 0.1);
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    .no-sessions {
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+    }
+
+    /* Teaching Status Card - Modern Design */
+    .teaching-status-card {
+      background: linear-gradient(135deg, white 0%, #f8f9ff 100%);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(74, 108, 247, 0.1);
+    }
+
+    .teaching-status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #4a6cf7, #6a8eff);
+    }
+
+    .teaching-status-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .teaching-status-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.1), rgba(74, 108, 247, 0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      font-size: 1.8rem;
+      color: #4a6cf7;
+    }
+
+    .teaching-status-header h3 {
+      font-size: 1.6rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .teaching-status-content p {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .ai-test-btn {
+      background: linear-gradient(135deg, #4a6cf7, #6a8eff);
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+
+    .ai-test-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(74, 108, 247, 0.4);
+    }
+
+    /* Subjects Card - Modern Design */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 15px;
+    }
+
+    .subject-item {
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.05), rgba(74, 108, 247, 0.02));
+      border-radius: 12px;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid rgba(74, 108, 247, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .subject-item:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.1), rgba(74, 108, 247, 0.05));
+      border-color: rgba(74, 108, 247, 0.3);
+      box-shadow: 0 8px 20px rgba(74, 108, 247, 0.15);
+    }
+
+    .subject-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: #4a6cf7;
+    }
+
+    .subject-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Stats Card - Modern Design */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.05), rgba(74, 108, 247, 0.02));
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(74, 108, 247, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(74, 108, 247, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #4a6cf7;
+      margin-bottom: 8px;
+    }
+
+    .stat-label-box {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Quick Actions - Modern Design */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.05), rgba(74, 108, 247, 0.02));
+      border: 1px solid rgba(74, 108, 247, 0.1);
+      border-radius: 15px;
+      padding: 25px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .action-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(74, 108, 247, 0.1), rgba(74, 108, 247, 0.05));
+      transform: translateY(-5px);
+      border-color: #4a6cf7;
+      box-shadow: 0 10px 25px rgba(74, 108, 247, 0.2);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .action-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      color: #4a6cf7;
+    }
+
+    .action-text {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* Footer - Modern Design */
+    .footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+      font-size: 0.95rem;
+      border-top: 1px solid rgba(74, 108, 247, 0.1);
+      margin-top: 40px;
+      background: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .notification-bar {
+        padding: 10px 15px;
+        top: 140px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .notification-info {
+        justify-content: center;
+      }
+
+      .notification-actions {
+        justify-content: center;
+      }
+
+      .dashboard {
+        padding: 20px;
+      }
+
+      .welcome-card {
+        padding: 20px;
+      }
+
+      .welcome-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .user-role {
+        justify-content: center;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .user-profile {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .logo-text {
+        font-size: 1.4rem;
+      }
+
+      .user-welcome h1 {
+        font-size: 1.8rem;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .subjects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Hover Effects */
+    .card,
+    .teaching-status-card,
+    .welcome-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-exchange-alt"></i>
+      </div>
+      <div class="logo-text">SkillSwap</div>
+    </div>
+
+    <div class="user-profile">
+      <div class="user-avatar" id="userAvatar">C</div>
+      <div class="user-info">
+        <h3 id="userName">Chaitu</h3>
+        <p id="userEmail">chaitu@skillswap.com</p>
+      </div>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Notification Bar -->
+  <div class="notification-bar" id="notificationBar">
+    <div class="notification-info">
+      <i class="fas fa-bell notification-icon"></i>
+      <span class="notification-text" id="notificationText">You have 3 pending sessions, 2 new messages, and 1 AI test
+        to complete</span>
+    </div>
+    <div class="notification-actions">
+      <button class="notification-btn" onclick="viewNotifications()">
+        <i class="fas fa-eye"></i> View All
+      </button>
+      <button class="notification-btn" onclick="clearNotification()">
+        <i class="fas fa-check"></i> Mark as Read
+      </button>
+      <button class="close-notification" onclick="closeNotificationBar()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <main class="dashboard">
+    <!-- Welcome Card -->
+    <div class="welcome-card">
+      <div class="welcome-header">
+        <div class="user-welcome">
+          <h1>Welcome back, <span style="color: #4a6cf7;" id="welcomeName">Chaitu</span>!</h1>
+          <div class="user-role">
+            <span class="role-badge">B.Tech Student</span>
+            <span class="role-text">Learner & Teacher</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="continue-learning-section">
+        <h3>Continue Your Learning Journey</h3>
+        <p>Discover peers teaching your favorite subjects and enhance your skills with interactive sessions.</p>
+        <button class="explore-btn">
+          <i class="fas fa-search"></i> Explore Subjects
+        </button>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Upcoming Sessions Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h2 class="card-title">Upcoming Sessions</h2>
+        </div>
+        <div class="session-list" id="sessionList">
+          <div style="text-align:center; padding: 30px; color: #666;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 10px; color: #4a6cf7;"></i>
+            <p>Loading your sessions...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching Status Card -->
+      <div class="teaching-status-card">
+        <div class="teaching-status-header">
+          <div class="teaching-status-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3>Teaching Status</h3>
+        </div>
+        <div class="teaching-status-content">
+          <p>Complete the AI assessment to verify your teaching skills and start sharing your knowledge with others.</p>
+          <button class="ai-test-btn" id="aiTestBtn">
+            <i class="fas fa-robot"></i>
+            Take AI Assessment
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h2 class="card-title">Quick Actions</h2>
+        </div>
+        <div class="quick-actions">
+          <a href="learn2.html" class="action-btn">
+            <div class="action-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div class="action-text">Learn</div>
+          </a>
+
+          <a href="teach2.html" class="action-btn" id="teachBtn">
+            <div class="action-icon">
+              <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="action-text">Teach</div>
+          </a>
+
+          <a href="schedule.html" class="action-btn">
+            <div class="action-icon">
+              <i class="fas fa-calendar-plus"></i>
+            </div>
+            <div class="action-text">Schedule</div>
+          </a>
+
+          <!-- UPDATED: Messages button redirects to messages.html -->
+          <a href="messages.html" class="action-btn">
+            <div class="action-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div class="action-text">Messages</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Subjects -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <h2 class="card-title">Your Subjects</h2>
+        </div>
+        <div class="subjects-grid" id="subjectsGrid">
+          <!-- Subjects populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h2 class="card-title">Learning Stats</h2>
+        </div>
+        <div class="stats-container">
+          <div class="stat-box">
+            <div class="stat-number" id="hoursLearned">24</div>
+            <div class="stat-label-box">Hours Learned</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="sessionsCompleted">15</div>
+            <div class="stat-label-box">Sessions Completed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="subjectsLearned">6</div>
+            <div class="stat-label-box">Subjects</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="streakDays">21</div>
+            <div class="stat-label-box">Day Streak</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>SkillSwap Dashboard © 2024 | Empowering Knowledge Exchange Through Peer Learning</p>
+  </footer>
+
+  <script>
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if user is logged in
+      const username = localStorage.getItem('skillSwapUsername') || 'Chaitu';
+      const email = localStorage.getItem('skillSwapEmail') || 'chaitu@skillswap.com';
+
+      // Display user information
+      document.getElementById('userName').textContent = username;
+      document.getElementById('userEmail').textContent = email;
+      document.getElementById('welcomeName').textContent = username;
+
+      // Set user avatar with first letter
+      const userAvatar = document.getElementById('userAvatar');
+      if (username && username.length > 0) {
+        userAvatar.textContent = username.charAt(0).toUpperCase();
+      }
+
+      // Populate subjects grid with Real Data
+      const subjectsGrid = document.getElementById('subjectsGrid');
+      subjectsGrid.innerHTML = ''; // Clear default content
+
+      let profileData = {};
+      try {
+        profileData = JSON.parse(localStorage.getItem('swapSkillProfile') || '{}');
+      } catch (e) {
+        console.error("Error reading profile", e);
+      }
+
+      const learnSubjects = profileData.learnSubjects || [];
+      const teachSubjects = profileData.teachSubjects || [];
+
+      // Update Stats
+      const totalSubjects = learnSubjects.length + teachSubjects.length;
+      const subjectsLearnedEl = document.getElementById('subjectsLearned');
+      if (subjectsLearnedEl) subjectsLearnedEl.textContent = totalSubjects;
+
+      // Update User Role Badge if available
+      const roleBadge = document.querySelector('.role-badge');
+      if (roleBadge && profileData.educationLevel) {
+        // Capitalize first letter
+        roleBadge.textContent = profileData.educationLevel.charAt(0).toUpperCase() + profileData.educationLevel.slice(1);
+      }
+
+      // Combine subjects for display
+      const allSubjects = [
+        ...learnSubjects.map(s => ({ name: s, type: 'learning' })),
+        ...teachSubjects.map(s => ({ name: s, type: 'teaching' }))
+      ];
+
+      // Fallback if empty
+      if (allSubjects.length === 0) {
+        subjectsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">No subjects selected yet. <a href="profile.html">Update Profile</a></p>';
+      }
+
+      const subjectIcons = {
+        "Java": "fab fa-java",
+        "Mathematics": "fas fa-calculator",
+        "Python": "fab fa-python",
+        "Physics": "fas fa-atom",
+        "Chemistry": "fas fa-flask",
+        "C++": "fas fa-code",
+        "Web Dev": "fas fa-laptop-code",
+        "DSA": "fas fa-sitemap",
+        "Science": "fas fa-flask",
+        "English": "fas fa-language",
+        "History": "fas fa-landmark",
+        "Geography": "fas fa-globe-americas",
+        "Biology": "fas fa-dna"
+      };
+
+      allSubjects.forEach(subjectObj => {
+        const subjectItem = document.createElement('div');
+        subjectItem.className = 'subject-item';
+
+        // Add a class or badge for type
+        const typeColor = subjectObj.type === 'learning' ? '#4a6cf7' : '#28a745';
+        const typeIcon = subjectObj.type === 'learning' ? 'fa-book-reader' : 'fa-chalkboard-teacher';
+
+        subjectItem.innerHTML = `
+          <div class="subject-icon">
+            <i class="${subjectIcons[subjectObj.name] || 'fas fa-book'}" style="color: ${typeColor}"></i>
+          </div>
+          <div class="subject-name">${subjectObj.name}</div>
+          <div style="font-size: 0.75rem; color: ${typeColor}; margin-top: 5px; font-weight: 600;">
+            <i class="fas ${typeIcon}"></i> ${subjectObj.type.charAt(0).toUpperCase() + subjectObj.type.slice(1)}
+          </div>
+        `;
+        subjectsGrid.appendChild(subjectItem);
+      });
+
+      // Check teaching eligibility
+      const aiTestBtn = document.getElementById('aiTestBtn');
+      const teachBtn = document.getElementById('teachBtn');
+      const teachingStatusHeader = document.querySelector('.teaching-status-header h3');
+      const teachingStatusText = document.querySelector('.teaching-status-content p');
+
+      // Check results from localStorage
+      let isEligibleToTeach = false;
+      try {
+        const testResults = JSON.parse(localStorage.getItem('proficiencyTestResult'));
+        if (testResults && testResults.percentage >= 70) {
+          isEligibleToTeach = true;
+        }
+      } catch (e) {
+        console.error("Error reading test results", e);
+      }
+
+      // Also check profile data for any previous passes not in latest result
+      try {
+        const profileData = JSON.parse(localStorage.getItem('swapSkillProfile'));
+        if (profileData && profileData.proficiencyTest && profileData.proficiencyTest.passed) {
+          isEligibleToTeach = true;
+        }
+      } catch (e) {
+        console.error("Error reading profile data", e);
+      }
+
+      if (!isEligibleToTeach) {
+        // Condition: Not passed or not taken test
+        aiTestBtn.addEventListener('click', function () {
+          // Navigate to test page
+          window.location.href = 'test2.html';
+        });
+
+        // Disable Teach button
+        teachBtn.style.opacity = "0.5";
+        teachBtn.style.pointerEvents = "none";
+        teachBtn.style.cursor = "not-allowed";
+        teachBtn.style.filter = "grayscale(100%)";
+        teachBtn.title = "Complete AI assessment with >70% to start teaching";
+
+        // Update status card text if needed
+        if (teachingStatusText) {
+          teachingStatusText.textContent = "Complete the AI assessment with a score of at least 70% to verify your teaching skills and unlock the Teach dashboard.";
+        }
+      } else {
+        // Condition: Passed test (>70%)
+        aiTestBtn.innerHTML = '<i class="fas fa-check-circle"></i> Assessment Passed';
+        aiTestBtn.style.background = "linear-gradient(135deg, #28a745, #20c997)";
+        aiTestBtn.style.cursor = "default";
+
+        // Remove click event for test or make it optional to retake? 
+        // Let's just say "Already passed"
+        aiTestBtn.onclick = function (e) {
+          e.preventDefault();
+          alert('You have already passed the assessment and are eligible to teach!');
+        };
+
+        // Enable Teach button
+        teachBtn.style.opacity = "1";
+        teachBtn.style.pointerEvents = "auto";
+        teachBtn.style.cursor = "pointer";
+        teachBtn.style.filter = "none";
+        teachBtn.href = "teach2.html"; // Ensure it links correctly
+
+        // Update status card text
+        if (teachingStatusHeader) teachingStatusHeader.textContent = "You are a Teacher!";
+        if (teachingStatusText) teachingStatusText.textContent = "Congratulations! You have verified your skills. You can now access the Teach dashboard to manage your classes.";
+      }
+
+      // Fetch real sessions
+      fetchSessions();
+
+      // Initialize notification bar
+      initNotificationBar();
+
+      // Add hover effects to cards
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.style.animationDelay = Math.random() * 0.3 + 's';
+      });
+    });
+
+    // Fetch real accepted sessions from API
+    async function fetchSessions() {
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+
+      // DEBUG ALERT - User can't miss this
+      console.log("DEBUG: fetchSessions calling for ID:", currentUserId);
+
+      if (!currentUserId) {
+        console.warn("No skillSwapUserId found in localStorage");
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/sessions/${currentUserId}`);
+        if (response.ok) {
+          const sessions = await response.json();
+          console.log('API Response:', sessions);
+
+          if (sessions.length > 0) {
+            alert(`Success! Found ${sessions.length} scheduled sessions for you.`);
+          }
+
+          renderRealSessions(sessions);
+        } else {
+          console.error("API Error:", response.status);
+        }
+      } catch (e) {
+        console.error("Network error:", e);
+      }
+    }
+
+    // Render real sessions on dashboard
+    function renderRealSessions(sessions) {
+      const sessionList = document.getElementById('sessionList');
+      if (!sessionList) return;
+
+      console.log("RenderRealSessions called with:", sessions);
+
+      if (sessions.length === 0) {
+        sessionList.innerHTML = `
+          <div style="text-align:center; padding: 20px;">
+            <p class="no-sessions">No active sessions yet.</p>
+            <p style="font-size:0.8rem; color:#666;">If you just accepted a request, try clicking Sync.</p>
+            <button onclick="fetchSessions()" style="margin-top:10px; padding:5px 15px; border-radius:15px; background:#4a6cf7; color:white; border:none; cursor:pointer;">
+              <i class="fas fa-sync"></i> Sync Now
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const currentUserId = localStorage.getItem('skillSwapUserId');
+      sessionList.innerHTML = ''; // Clear hardcoded dummy sessions
+
+      sessions.forEach(session => {
+        try {
+          const isTeacher = session.teacher_id == currentUserId;
+          const partnerName = isTeacher ? session.learner_name : session.teacher_name;
+          const roleText = isTeacher ? 'Learning from you' : 'Teaching you';
+
+          // Safe date parsing
+          let dateStr = 'Unknown';
+          if (session.created_at) {
+            const d = new Date(session.created_at.replace(' ', 'T'));
+            dateStr = isNaN(d) ? 'Recent' : d.toLocaleDateString();
+          }
+
+          const sessionItem = document.createElement('div');
+          sessionItem.className = 'session-item';
+          const roomId = `${session.subject.toLowerCase().replace(/ /g, '-')}-${session.id}`;
+          sessionItem.innerHTML = `
+            <div class="session-details">
+              <h4>${session.subject} with ${partnerName}</h4>
+              <p>${roleText} • Accepted on ${dateStr}</p>
+            </div>
+            <div class="session-time">
+               <a href="videocall.html?roomId=${roomId}" style="background:#4a6cf7; color:white; padding:5px 15px; border-radius:15px; text-decoration:none; font-size:0.8rem; font-weight:600;">
+                 <i class="fas fa-video"></i> Join
+               </a>
+            </div>
+          `;
+          sessionList.appendChild(sessionItem);
+        } catch (e) {
+          console.error("Error rendering session row", e, session);
+        }
+      });
+
+      // Auto-alert if it's the first time seeing data
+      if (sessions.length > 0 && !sessionStorage.getItem('sessionAlertShown')) {
+        alert(`Congratulations! You have ${sessions.length} active sessions.`);
+        sessionStorage.setItem('sessionAlertShown', 'true');
+      }
+    }
+
+    // Notification Bar Functions
+    function initNotificationBar() {
+      // Check if notification bar should be shown
+      const isNotificationBarClosed = localStorage.getItem('notificationBarClosed');
+      if (isNotificationBarClosed === 'true') {
+        document.getElementById('notificationBar').style.display = 'none';
+      }
+
+      // Update notification text based on user data
+      updateNotificationText();
+    }
+
+    function updateNotificationText() {
+      const notificationText = document.getElementById('notificationText');
+      // In a real app, you would fetch this data from the server
+      const pendingSessions = 3;
+      const newMessages = 2;
+      const aiTests = 1;
+
+      notificationText.textContent = `You have ${pendingSessions} pending sessions, ${newMessages} new messages, and ${aiTests} AI assessment to complete`;
+    }
+
+    function viewNotifications() {
+      alert('Opening notifications panel...');
+      // In a real app, you would open a notifications modal or page
+    }
+
+    function clearNotification() {
+      const notificationBar = document.getElementById('notificationBar');
+      notificationBar.style.opacity = '0.7';
+      notificationBar.style.backgroundColor = 'rgba(102, 126, 234, 0.8)';
+
+      // Update notification text
+      document.getElementById('notificationText').textContent = 'All notifications marked as read';
+
+      // Hide action buttons
+      document.querySelector('.notification-actions').style.display = 'none';
+
+      // Restore after 3 seconds
+      setTimeout(() => {
+        notificationBar.style.display = 'none';
+        localStorage.setItem('notificationBarClosed', 'true');
+      }, 3000);
+    }
+
+    function closeNotificationBar() {
+      const notificationBar = document.getElementById('notificationBar');
+      notificationBar.style.display = 'none';
+      localStorage.setItem('notificationBarClosed', 'true');
+    }
+
+    // Other Functions
+    function logout() {
+      // Clear user data from localStorage
+      localStorage.removeItem('skillSwapUsername');
+      localStorage.removeItem('skillSwapEmail');
+      localStorage.removeItem('skillSwapIsLoggedIn');
+
+      // Redirect to login page
+      alert('Logging out...');
+      window.location.href = 'login2.html';
+    }
+
+    // Removed openMessages function since we're using href now
+    // function openMessages() {
+    //   alert('Opening messages...');
+    //   // In a real app, you would navigate to messages page
+    // }
+  </script>
+</body>
+
+</html>
